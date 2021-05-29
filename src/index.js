@@ -1,17 +1,35 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SearchForm from './components/SearchForm'
+import List from './components/List'
+// import articles from './components/data'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+
+
+
+const App=()=>{
+
+    const [articles,setArticles]=useState([]);
+
+    useEffect(()=>{
+        fetch('/articles').then(res=>res.json())
+        .then(data=>{
+            setArticles(data)
+        })
+
+
+    },[])
+
+    return(
+        <div className="app container">
+            <h1>Listerine</h1>
+            <SearchForm />
+            <List list={articles}/>
+        </div>
+    )
+}
+
+ReactDOM.render(<App/>,document.querySelector('#root'))

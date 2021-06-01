@@ -1,7 +1,7 @@
 import React from 'react';
 import Item from './Item'
 
-const List=({list})=>{
+const List=({list,onNewArticle})=>{
 
     return (
         <div className="list-group">

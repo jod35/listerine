@@ -26,8 +26,8 @@ const App=()=>{
     return(
         <div className="app container">
             <h1>Listerine</h1>
-            <SearchForm />
-            <List list={articles}/>
+            <SearchForm  onNewArticle={article=>setArticles(currentArticles=>[...currentArticles,article])}/>
+            <List list={articles} />
         </div>
     )
 }

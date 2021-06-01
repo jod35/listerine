@@ -1,10 +1,23 @@
-import React , {useState}from 'react'
+import React, {useEffect,useState}from 'react'
 
 
 
-const SearchForm =()=>{
+const SearchForm =({onNewArticle})=>{
     const [title,setTitle]=useState('');
     const [description,setDescription]=useState('');
+    const [articles,setArticles]=useState([]);
+
+
+    useEffect(() => {
+        fetch('/articles').then(res => res.json())
+            .then(data => {
+                setArticles(data)
+            })
+
+
+    }, [])
+
+
 
     const handleInputChange=(event)=>{
         setTitle(event.target.value)
@@ -16,6 +29,7 @@ const SearchForm =()=>{
         console.log(description)
     }
 
+    const article = { title: title, description: description }
     const handleSignup = (event) => {
         event.preventDefault();
 
@@ -24,15 +38,20 @@ const SearchForm =()=>{
             headers:{
                 'content-type':'application/json'
             },
-            body:JSON.stringify({title:title,description:description})
+            body:JSON.stringify(article)
         }
 
         fetch('/articles',requestOptions).then(response=>response.json())
         .then(data=>{console.log(data)
             setTitle('')
             setDescription('')
+
+            onNewArticle(article)
+            
+            
         
         })
+        
     }
 
     return(
